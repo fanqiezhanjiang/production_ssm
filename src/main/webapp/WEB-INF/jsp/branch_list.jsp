@@ -12,7 +12,7 @@
 			<th data-options="field:'id',align:'center',width:100">机构编号</th>
 			<th data-options="field:'name',align:'center',width:100">机构名称</th>
 			<th data-options="field:'short_name',align:'center',width:100">机构简称</th>
-        </tr>
+			</tr>
     </thead>
 </table> 
 
@@ -62,22 +62,6 @@
 	iconCls:'icon-save',href:'branch/add'" style="width:65%;height:80%;padding:10px;">
 </div>
 
-
-<div id="branchNoteDialog" class="easyui-dialog" title="机构要求" data-options="modal:true,closed:true,resizable:true,
-		iconCls:'icon-save'" style="width:55%;height:65%;padding:10px">
-	<form id="branchNoteForm" class="itemForm" method="post">
-		<input type="hidden" name="branchId"/>
-	    <table cellpadding="5" >
-	        <tr>
-	            <td>备注:</td>
-	            <td><textarea style="width:800px;height:450px;visibility:hidden;" name="note"></textarea></td>
-	        </tr>
-	    </table>
-	</form>
-	<div style="padding:5px">
-	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="updatebranchNote()">保存</a>
-	</div>
-</div>
 <script>
 function doSearch_branch(value,name){ //用户输入用户名,点击搜素,触发此函数  
 	if(value == null || value == ''){
@@ -88,19 +72,10 @@ function doSearch_branch(value,name){ //用户输入用户名,点击搜素,触�
 			fitColumns:true,//允许表格自动缩放,以适应父容器
 	        columns : [ [ 
 				{field : 'ck', checkbox:true },
-				{field : 'branchId', width : 100, align:'center', title : '机构编号'},
-				{field : 'custom', width : 100, align : 'center', title : '订购客户', formatter:formatCustom},
-				{field : 'product', width : 100, align : 'center', title : '订购产品', formatter:formatProduct},
-				{field : 'quantity', width : 100, title : '订购数量', align:'center'},
-				{field : 'unitPrice', width : 70, title : '税前单价', align:'center'},
-				{field : 'unit', width : 70, title : '单位', align:'center'},
-				{field : 'status', width : 60, title : '状态', align:'center', formatter:TAOTAO.formatbranchStatus},
-				{field : 'branchDate', width : 130, title : '订购日期', align:'center', formatter:TAOTAO.formatDateTime},
-				{field : 'requestDate', width : 130, title : '要求日期', align:'center',
-					formatter:TAOTAO.formatDateTime},
-				{field : 'note', width : 100, title : '机构要求', align:'center', formatter:formatbranchNote},
-				{field : 'image', width : 100, title : '相关图片', align:'center', formatter:formatImg},
-				{field : 'file',  width : 100, title : '机构附件', align:'center', formatter:formatFile}
+				{field : 'id', width : 100, align:'center', title : '机构编号'},
+				{field : 'name', width : 100, align : 'center', title : '机构名称'},
+				{field : 'short_name', width : 100, align : 'center', title : '机构简称'}
+				
 	        ] ],  
 	    });
 	}else{
@@ -110,58 +85,14 @@ function doSearch_branch(value,name){ //用户输入用户名,点击搜素,触�
 			loadMsg:'数据加载中......', fitColumns:true,//允许表格自动缩放,以适应父容器
 	        columns : [ [ 
 	             	{field : 'ck', checkbox:true }, 
-	             	{field : 'branchId', width : 100, title : '机构编号', align:'center'},
-	             	{field : 'custom', width : 100, align : 'center', title : '订购客户', formatter:formatCustom},
-	             	{field : 'product', width : 100, title : '订购产品', formatter:formatProduct}, 
-	             	{field : 'quantity', width : 100, title : '订购数量', align:'center'}, 
-	             	{field : 'unitPrice', width : 70, title : '税前单价', align:'center'}, 
-	            	{field : 'unit', width : 70, title : '单位', align:'center'}, 
-	             	{field : 'status', width : 60, title : '状态', align:'center', formatter:TAOTAO.formatbranchStatus}, 
-	             	{field : 'branchDate', width : 130, title : '订购日期', align:'center',
-						formatter:TAOTAO.formatDateTime},
-	             	{field : 'requestDate', width : 130, title : '要求日期', align:'center',
-						formatter:TAOTAO.formatDateTime},
-	             	{field : 'note', width : 100, title : '机构要求', align:'center', formatter:formatbranchNote}, 
-	             	{field : 'image', width : 100, title : '相关图片', align:'center', formatter:formatImg}, 
-	             	{field : 'file',  width : 100, title : '机构附件', align:'center', formatter:formatFile}
+	             	{field : 'id', width : 100, align:'center', title : '机构编号'},
+					{field : 'name', width : 100, align : 'center', title : '机构名称'},
+					{field : 'short_name', width : 100, align : 'center', title : '机构简称'}
 	        ] ],  
 	    });
 	}
 }
-	var branchNoteEditor ;
 	
-	var branchProductEditor;
-	
-	var branchCustomEditor;
-	
-	//格式化客户信息
-	function formatCustom(value, row, index){ 
-		if(value !=null && value != ''){
-			var row = onbranchClickRow(index); 
-			return "<a href=javascript:openbranchCustom("+index+")>"+value.customName+"</a>";
-		}else{
-			return "无";
-		}
-	};  
-	
-	//格式化产品信息
-	function  formatProduct(value, row, index){ 
-		if(value !=null && value != ''){
-			return "<a href=javascript:openbranchProduct("+index+")>"+value.productName+"</a>";
-		}else{
-			return "无";
-		}
-	};
-	
-	//格式化机构要求
-	function formatbranchNote(value, row, index){ 
-		if(value !=null && value != ''){
-			return "<a href=javascript:openbranchNote("+index+")>"+"机构要求"+"</a>";
-		}else{
-			return "无";
-		}
-	}
-
 	//根据index拿到该行值
 	function onbranchClickRow(index) {
 		var rows = $('#branchList').datagrid('getRows');
@@ -169,180 +100,13 @@ function doSearch_branch(value,name){ //用户输入用户名,点击搜素,触�
 		
 	}
 	
-	//打开客户信息对话框
-	function  openbranchCustom(index){ 
-		var row = onbranchClickRow(index);
-		$("#branchCustomInfo").dialog({
-    		onOpen :function(){
-    			$.get("custom/get/"+row.custom.customId,'',function(data){
-    				branchCustomEditor = TAOTAO.createEditor("#branchCustomEditForm [name=note]");	
-		    		//回显数据
-		    		$("#branchCustomEditForm").form("load", data);
-		    		branchCustomEditor.html(data.note);
-		    		
-		    		TAOTAO.init({
-        				"pics" : data.image,
-        			});
-    	    	});
-    		},
-			onBeforeClose: function (event, ui) {
-				// 关闭Dialog前移除编辑器
-			   	KindEditor.remove("#branchCustomEditForm [name=note]");
-			}
-    	}).dialog("open");
-	};
-	
-	function submitbranchCustomEditForm(){
-		$.get("custom/edit_judge",'',function(data){
-    		if(data.msg != null){
-    			$.messager.alert('提示', data.msg);
-    		}else{
-    			if(!$('#branchCustomEditForm').form('validate')){
-    				$.messager.alert('提示','表单还未填写完成!');
-    				return ;
-    			}
-    			//同步文本框中的备注
-    			branchCustomEditor.sync();
-    			$.post("custom/update_all",$("#branchCustomEditForm").serialize(), function(data){
-    				if(data.status == 200){
-    					$.messager.alert('提示','修改客户成功!','info',function(){
-    						$("#branchCustomInfo").dialog("close");
-    						$("#branchList").datagrid("reload");
-    					});
-    				}else{
-    					$.messager.alert('提示',data.msg);
-    				}
-    			});
-    		}
-    	});
-	}
-	
-	//打开产品信息对话框
-	function  openbranchProduct(index){ 
-		var row = onbranchClickRow(index);
-		$("#branchProductInfo").dialog({
-    		onOpen :function(){
-    			$.get("product/get/"+row.product.productId,'',function(data){
-    				
-    				branchProductEditor = TAOTAO.createEditor("#branchProductEditForm [name=note]");	
-		    		//回显数据
-		    		$("#branchProductEditForm").form("load", data);
-		    		branchProductEditor.html(data.note);
-		    		
-		    		//加载图片
- 	        		initbranchProductPic({
-           				"pics" : data.image,
-           			});
-    	    	});
-    		},
-			onBeforeClose: function (event, ui) {
-				// 关闭Dialog前移除编辑器
-			   	KindEditor.remove("#branchProductEditForm [name=note]");
-			   	clearManuSpan();
-			}
-    	}).dialog("open");
-	};
-	
-	// 加载图片
-    function initbranchProductPic(data){
-    	$(".branchProductPic").each(function(i,e){
-    		var _ele = $(e);
-    		_ele.siblings("div.pics").remove();
-    		_ele.after('\
-    			<div class="pics">\
-        			<ul></ul>\
-        		</div>');
-    		// 回显图片
-    		var j = false;
-        	if(data && data.pics){
-        		var imgs = data.pics.split(",");
-        		for(var i in imgs){
-        			if($.trim(imgs[i]).length > 0){
-        				_ele.siblings(".pics").find("ul").append("<li><a id='img"+i+"' href='"+imgs[i]+"' target='_blank'>" +
-        						"<img src='"+imgs[i]+"' width='80' height='50' /></a> ");
-        				j = true;
-        			}
-        		}
-        	}
-        	if(!j){
-    			$("#branchProductPic").html("<span style='font-size: 12px;font-family: Microsoft YaHei;'>无</span>");
-    		}
-    	});
-    }
-	
-    function clearManuSpan(){
-		$("#branchProductPic").html('');
-	}
-    
-	function submitbranchProductEditForm(){
-		$.get("product/edit_judge",'',function(data){
-    		if(data.msg != null){
-    			$.messager.alert('提示', data.msg);
-    		}else{
-    			if(!$('#branchProductEditForm').form('validate')){
-    				$.messager.alert('提示','表单还未填写完成!');
-    				return ;
-    			}
-    			branchProductEditor.sync();
-    			
-    			$.post("product/update_all",$("#branchProductEditForm").serialize(), function(data){
-    				if(data.status == 200){
-    					$.messager.alert('提示','修改产品成功!','info',function(){
-    						$("#branchProductInfo").dialog("close");
-    						$("#branchList").datagrid("reload");
-    					});
-    				}else{
-    					$.messager.alert('提示',data.msg);
-    				}
-    			});
-    		}
-    	});
-	}
-	
-	//打开机构要求富文本编辑器对话框
-	function  openbranchNote(index){ 
-		var row = onbranchClickRow(index);
-		$("#branchNoteDialog").dialog({
-    		onOpen :function(){
-    			$("#branchNoteForm [name=branchId]").val(row.branchId);
-    			branchNoteEditor = TAOTAO.createEditor("#branchNoteForm [name=note]");
-    			branchNoteEditor.html(row.note);
-    		},
-		
-			onBeforeClose: function (event, ui) {
-				// 关闭Dialog前移除编辑器
-			   	KindEditor.remove("#branchNoteForm [name=note]");
-			}
-    	}).dialog("open");
-		
-	};
-	
-	//更新机构要求
-	function updatebranchNote(){
-		$.get("branch/edit_judge",'',function(data){
-    		if(data.msg != null){
-    			$.messager.alert('提示', data.msg);
-    		}else{
-    			branchNoteEditor.sync();
-    			$.post("branch/update_note",$("#branchNoteForm").serialize(), function(data){
-    				if(data.status == 200){
-    					$("#branchNoteDialog").dialog("close");
-    					$("#branchList").datagrid("reload");
-    					$.messager.alert("操作提示", "更新机构要求成功！");
-    				}else{
-    					$.messager.alert("操作提示", "更新机构要求失败！");
-    				}
-    			});
-    		}
-    	});
-	}
 	
     function getbranchSelectionsIds(){
     	var branchList = $("#branchList");
     	var sels = branchList.datagrid("getSelections");
     	var ids = [];
     	for(var i in sels){
-    		ids.push(sels[i].branchId);
+    		ids.push(sels[i].id);
     	}
     	ids = ids.join(","); 
     	
@@ -365,7 +129,6 @@ function doSearch_branch(value,name){ //用户输入用户名,点击搜素,触�
        			$.messager.alert('提示', data.msg);
        		}else{
        			var ids = getbranchSelectionsIds();
-               	
                	if(ids.length == 0){
                		$.messager.alert('提示','必须选择一个机构才能编辑!');
                		return ;
@@ -379,21 +142,8 @@ function doSearch_branch(value,name){ //用户输入用户名,点击搜素,触�
                		onLoad :function(){
                			//回显数据
                			var data = $("#branchList").datagrid("getSelections")[0];
-               			data.customId = data.custom.customId; 
-               			data.productId = data.product.productId; 
-               			data.branchDate = TAOTAO.formatDateTime(data.branchDate);
-               			data.requestDate = TAOTAO.formatDateTime(data.requestDate);
-               			$("#branchEditForm").form("load", data);
-               			branchEditEditor.html(data.note);
                			
-               			TAOTAO.init({
-               				"pics" : data.image,
-               			});
-               			
-               			//加载文件上传插件
-               			initbranchEditFileUpload();
-               			//加载上传过的文件
-               			initUploadedFile();
+               			$("#branchEditWindow").form("load", data);
                		}
                	}).window("open");
        		}
@@ -406,6 +156,7 @@ function doSearch_branch(value,name){ //用户输入用户名,点击搜素,触�
       			$.messager.alert('提示', data.msg);
       		}else{
       			var ids = getbranchSelectionsIds();
+      			alert(ids);
               	if(ids.length == 0){
               		$.messager.alert('提示','未选中机构!');
               		return ;
